@@ -3,6 +3,7 @@ import {Link, router} from "expo-router";
 import {useState} from 'react'
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
+import {signIn} from "@/lib/appwrite";
 
 const SignIn = () => {
 
@@ -13,16 +14,18 @@ const SignIn = () => {
     });
 
     const submit = async () => {
-        if (!form.email || !form.password) {
+        const {email, password} = form;
+        if (!email || !password) {
             return Alert.alert('Error', 'Please provide credentials!')
         }
         setIsSubmitting(true);
         try {
-            //Sign in function TODO
-            Alert.alert('Success', 'User signed in successfully!');
+
+            await signIn({email, password});
+
             router.replace('/');
         } catch (error: any) {
-            Alert.alert('Error', 'Something went wrong!');
+            Alert.alert('Error: ', error.message);
         } finally {
             setIsSubmitting(false);
         }

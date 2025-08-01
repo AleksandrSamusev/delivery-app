@@ -2,10 +2,15 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {FlatList, Pressable, View, Text, Image, TouchableOpacity} from "react-native";
 import {images, offers} from "@/constants";
 import {Fragment} from "react";
-import cn from 'clsx';
 import CartButton from "@/components/CartButton";
+import useAuthStore from "@/store/auth.store";
 
 export default function Index() {
+
+    const {user} = useAuthStore();
+    console.log('USER:', JSON.stringify(user, null, 2));
+
+
     return (
         <SafeAreaView className='flex-1 bg-white'>
 
@@ -30,7 +35,8 @@ export default function Index() {
                                         </View>
                                         <View className={`offer-card__info ${isEven ? 'pl-10' : 'pr-10'}`}>
                                             <Text className='h1-bold text-white leading-tight'>{item.title}</Text>
-                                            <Image source={images.arrowRight} className='size-10' resizeMode='contain' tintColor='#ffffff'/>
+                                            <Image source={images.arrowRight} className='size-10' resizeMode='contain'
+                                                   tintColor='#ffffff'/>
                                         </View>
                                     </Fragment>
                                 )}
